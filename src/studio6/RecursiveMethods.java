@@ -1,5 +1,7 @@
 package studio6;
 
+import java.lang.reflect.Array;
+
 import edu.princeton.cs.introcs.StdDraw;
 
 public class RecursiveMethods {
@@ -12,9 +14,13 @@ public class RecursiveMethods {
 	 *         ...)
 	 */
 	public static double geometricSum(int n) {
-		
 			// FIXME compute the geometric sum for the first n terms recursively
+		if (n == 0) {
 			return 0;
+		}
+		else {
+			return geometricSum(n-1) + Math.pow(0.5, n);
+		}
 		
 	}
 
@@ -44,8 +50,19 @@ public class RecursiveMethods {
 	public static int[] toReversed(int[] array) {
 		
 			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
-		
+			int index = array.length - 1;
+			int[] reversed = new int[array.length];
+			return helperIndex(index,reversed,array);
+			
+
+	}
+	public static int[] helperIndex(int index, int[] reversed, int[] originalArray) {
+		int reversedIndex = reversed.length - 1 - index;
+		if (index < 0) {
+			return reversed;
+		}
+		reversed[index] = originalArray[reversedIndex];
+		return helperIndex(index-1, reversed, originalArray);
 	}
 
 	/**
@@ -59,6 +76,19 @@ public class RecursiveMethods {
 	 */
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius,
 			double radiusMinimumDrawingThreshold) {
+		if (radius < radiusMinimumDrawingThreshold) {
+			return;
+		}
+		else {
+			StdDraw.circle(xCenter, yCenter,radius);
+			circlesUponCircles(xCenter + radius, yCenter, radius/3,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter - radius, yCenter, radius/3,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, yCenter + radius, radius/3,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, yCenter - radius, radius/3,radiusMinimumDrawingThreshold);
+			
+			
+			
+		}
 		
 		// FIXME
 	}
